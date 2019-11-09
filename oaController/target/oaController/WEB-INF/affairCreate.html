@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公文创建</title>
+<link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
+
+<style>
+	.rightinfo>dl{float:left;margin:20px;padding:10px;border:1px solid #cccccc;width:340px;}
+	.rightinfo>dl>dt{font-weight:bolid;padding:5px;border-bottom:2px solid #6699ff;}
+	.rightinfo>dl>dd{padding:5px;}
+</style>
+
+</head>
+
+<body>
+    
+    <div class="rightinfo">
+    	<dl>
+    		<dt>人事</dt>
+    		<#list affairModelList as affairModel>
+    		<dd><a href="../affair/info?affairModelId=${affairModel.affairModelId}">${affairModel.affairModelName}</a></dd>
+    		</#list>
+    		<dd>出差申请单</dd>
+    		<dd>补卡申请单</dd>
+    		<dd>绩效考核表</dd>
+    		<dd>薪酬审批表</dd>
+    	</dl>
+    	<dl>
+    		<dt>财务</dt>
+    		<dd>部门预算申请单</dd>
+    		<dd>开票申请单</dd>
+    		<dd>报销申请单</dd>
+    	</dl>
+    	<dl>
+    		<dt>仓库</dt>
+    		<dd>采购入库申请</dd>
+    		<dd>销售订单</dd>
+    		<dd>仓库物品表</dd>
+    	</dl>
+    </div>
+    
+    <div style="height:500px;"></div>
+</body>
+</html>
+

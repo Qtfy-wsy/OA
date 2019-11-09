@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+	<form action="">
+	<table>
+	<#list affairmodelitem as ami>
+		<thead>
+			<td>${ami.modelItemName}</td>
+		</thead>
+			<tr>
+				<td>
+					<#switch ami.modelItemType>
+						<#case 1>${ami.modelItemName}:<input type="text" />
+						<#break>
+						<#case 3>${ami.modelItemName}:<select >
+							<#if ami.options??>
+								<#list ami.options as option>
+									<option>${option}</option>
+								</#list>
+							</#if>
+						</select>
+						<#break>
+						<#case 5>${ami.modelItemName}:<select multiple="multiple">
+							<#if ami.options??>
+								<#list ami.options as option>
+									<option>${option}</option>
+								</#list>
+							</#if>
+						</select>
+						<#break>
+						<#case 7>${ami.modelItemName}:<textarea rows="3" cols="20" ></textarea>
+					</#switch>
+				</td>
+			</tr>
+		</#list>
+	</table>
+	<input type="button" onclick="sub(this)" value="发布">
+	</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>流程模板</title>
+ <link href="../resources/css/style.css" rel="stylesheet" type="text/css" />  
+<link rel="stylesheet" type="text/css" href="../resources/css/skin_/form.css" /> 
+<script type="text/javascript" src="../resources/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../resources/js/affairadd.js"></script>
+<style>
+	#dv1 div{margin:20px;}
+	#dv1 div input,#dv1 div select{border:1px solid #cccccc;}
+	
+	#lcl{font-size:16px;line-height:40px;}
+	#lcl a{cursor:pointer;border:1px solid #cccccc;padding:5px;margin-left:20px;}
+	#lcl a:hover{background:#37a8dd;}
+	#fq{font-size:15px;font-weight:bold;}
+</style>
+</head>
+
+<body>
+    
+    <div class="rightinfo">
+    <form name="f1" method="post" action="../affairmodule/AffairModuleSave" style="margin-bottom:20px;">
+    
+     <h2 class="subfild"><span>流程信息:</span></h2>
+    	<!-- 默认 -->
+    	流程名称：<input name="affairModelName" type="text" class="dfinput" />
+    	<br /><br />
+    	
+    	流程类型：
+    	<select name="affairTypeId" style="border:1px solid #cccccc;width:135px;height:32px;line-height:32px;">
+    		<#list affairTypeList as affairType>
+	    		<option value="${affairType.affairTypeId}">${affairType.affairTypeName}</option>
+	    	</#list>
+    	</select>
+    	<br /><br />
+    	
+    	 <h2 class="subfild"><span>流程控件:</span></h2>
+    	<div id="dv1" style="margin:10px 0px;">
+    		<div>
+    			栏目名称：<input name="modelItemName1" type="text" />
+    			栏目类型：<select name="modelItemType1">
+    						<option value="1">文本框</option>
+    						<option value="2">日期框</option>
+    						<option value="3">下拉列表</option>
+    						<option value="4">单选</option>
+    						<option value="5">多选</option>
+    						<option value="6">上传</option>
+    						<option value="7">多行文本</option>
+    				   </select>
+    			栏目控件参数：<input name="modelItemOption1" type="text" />    				
+    		</div>
+    	
+    	</div>
+    	<input id="btn" type="button" value="添加控件" class="btn" />
+    	<input name="cols" type="text" value="1" />
+    	
+    	
+    	<h2 class="subfild"><span>流程链:</span></h2>
+    	<div>
+    		<div id="lcl">
+    			总经理： <a id="dp1" data="1">张三</a>
+    		</div>
+    		<div id="lcl">
+    			部门名称：<select id="dp2"><option>--请选择部门--</option></select>
+    		</div>
+    		<div id="lcl" class="dp3">
+    			部门人员：
+    		</div>
+    	</div>
+    	</br>
+    	<div>
+    		<div id="fq">发起流程</div>
+    	</div>
+    	<input name="chain" type="text" value="-1" />
+    	
+    	<div style="margin-top:20px;text-align:left;padding-left:20px;">
+    		<input name="sub" type="submit" value="确定创建" class="btn" />
+    	</div>
+    </form>
+    </div>
+    
+    <div style="height:500px;"></div>
+</body>
+</html>

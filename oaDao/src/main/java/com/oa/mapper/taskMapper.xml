@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.oa.mapper.TaskMapper">
+  <!-- 查询指定日期是否在假期内 -->
+  	<select id="selectHoliday" parameterType="DateParam" resultType="Holiday">
+  		select * from attendholiday as a where a.beginDate&lt;=#{date1} and a.endDate>=#{date1}
+  	</select>
+  </mapper>

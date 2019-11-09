@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.oa.mapper.MenuMapper">
+  <!-- 获取操作选项 -->
+  <select id="selectOpreate" parameterType="Param" resultMap="opreateMap">
+  	select * from menu_operate where menuId=#{id}
+  </select>
+  <resultMap type="Menu_operate" id="opreateMap">
+  	<result property="menuId" column="menuId"/>
+  	<collection property="operateList" ofType="Operate_pid">
+  		<result property="operateId" column="operateId"/>
+  		<result property="operateName" column="operateName"/>
+  		<result property="operateAction" column="operateAction"/>
+  		<result property="permissionId" column="permissionId"/>
+  	</collection>
+  </resultMap>
+  </mapper>

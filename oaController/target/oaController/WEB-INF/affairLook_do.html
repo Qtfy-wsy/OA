@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <link rel="stylesheet" type="text/css" href="../resources/css/style.css" />  
+<link rel="stylesheet" type="text/css" href="../resources/css/skin_/form.css" /> 
+<style>
+.div_t{margin-left:60px;margin-top:5px;color:#000;font-size: 12px;border:1px solid  #ccc;
+width:135px;height:20px;line-height:20px;text-align:center}
+#table{width:600px;height:350px;text-align:center;border="1"}
+</style>
+</head>
+<body>
+            <h2 class="subfild">
+            	<span>基本信息</span>
+            </h2>
+            
+            <div class="kv-item ue-clear">
+                	<label>公文编号</label>
+                	<div class="kv-item-content"><div class="div_t">${affair.affairId}</div></div>
+                </div>
+            	
+            	<div class="kv-item ue-clear">
+                	<label>流程发起人</label>
+                	<div class="kv-item-content"><div class="div_t">${startRoleName}</div></div>
+                </div>
+                <div class="kv-item ue-clear">
+                	<label>流程发起时间</label>
+                	<div class="kv-item-content"><div class="div_t">${affair.affairTime}</div></div>
+                </div>
+                <div class="kv-item ue-clear">
+                	<label>流程状态</label>
+                	<div class="kv-item-content"><div class="div_t">${affair.affairStateformation}</div></div>
+                </div>
+            </div>
+            
+            <h2 class="subfild">
+            	<span>正文信息</span>
+            </h2>
+             <div class="div1">${affair.affairContent}</div>
+             
+             <h2 class="subfild">
+            	<span>评阅信息</span>
+            </h2>
+            
+            <table border="1" class="tab" style="width:850px;" cellspacing="0" cellpadding="3">
+              <tr>
+                <td align="center" width="150">发起人</td>
+                <td align="center" width="180">评阅人</td>
+                <td align="center" width="150">所属部门</td>
+                <td align="center" width="150">评阅内容</td>
+                <td align="center" width="150">评阅日期</td>
+              </tr>
+              <#list affairLookVoList as affairLookVo>
+	              <tr>
+	                <td align="center">${affairLookVo.startRoleName}</td>
+	                <td align="center">${affairLookVo.checkRoleName}</td>
+	                <td align="center">${affairLookVo.departmentName!}</td>
+	                <td align="center">${affairLookVo.affairChainRemark!}</td>
+	                <td align="center">${affairLookVo.affairLookTime!}</td>
+	              </tr>
+              </#list>
+            </table>
+            
+            
+
+</body>
+
+
+</html>

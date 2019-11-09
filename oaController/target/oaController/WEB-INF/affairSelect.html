@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>发起流程</title>
+</head>
+<body>
+	<#list models as model>
+		<li>
+			<a href="showAffair?affairModelId="+model.affairModelId>${model.affairModelName }</a>
+		</li>
+	</#list>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.oa.mapper.Dmapper">
+  <!-- 获取指定父级部门下的子部门信息 -->
+  	<select id="selectSubDepart" resultMap="DepartMap" parameterType="Integer">
+  		select * from department where pid=#{departmentId}
+  	</select>
+  	  <!-- 获取所有部门 -->
+	  <select id="selectDepartment" resultType="Department">
+	  	select * from department
+	  </select>
+  	<!-- 获取负责人信息 -->
+  	<select id="selectLeader" parameterType="Integer" resultType="User">
+  		select * from user where userId=#{userId}
+  	</select>
+  	<!-- 获取负责人下辖的员工信息 -->
+  	<select id="selectUser" parameterType="Integer" resultType="User">
+  		select * from user where leaderId=#{userId}
+  	</select>
+  	
+  	<!-- 组装子部门信息 -->
+  	<resultMap type="Department" id="DepartMap">
+  		<id property="departmentId" column="departmentId"/>
+  		<result property="departmentName" column="departmentName"/>
+  		<result property="pid" column="pid"/>
+  		<result property="userId" column="userId"/>
+  		<association property="leader" javaType="User" select="selectLeader" column="userId"></association>
+  		<collection property="staffs" ofType="User" select="selectUser" column="userId">	</collection>
+  		<collection property="subDepartment" ofType="Department" select="selectSubDepart" column="departmentId"></collection>
+  	</resultMap>
+  </mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.oa.mapper.AffairModuleMapper">
+
+<select  id="selectAffairTypes"   resultType="AffairType">
+		select * from affairtype ;
+</select>
+
+<insert id="saveAffairModel" parameterType="AffairModel" useGeneratedKeys="true">
+insert into affairmodel(affairModelId,affairModelName,userId,affairChain,affairTypeId) values(
+null,#{affairModelName},#{userId},#{affairChain},#{affairTypeId})
+</insert>
+
+<select id="selectPrimaryKey" resultType="int">
+select @@identity
+</select>
+
+<insert id="saveAffairModelItem" parameterType="AffairModelItem" useGeneratedKeys="true">
+insert into affairmodelitem(modelItemId,modelItemName,modelItemType,modelItemOption,affairModelId) values(
+null,#{modelItemName},#{modelItemType},#{modelItemOption},#{affairModelId})
+</insert>
+
+<select id="selectAffairmodules" parameterType="AffairModel" resultType="AffairModel">
+select * from affairmodel
+</select>
+
+<delete id="deleteAffairModel" parameterType="int">
+delete from affairmodel where affairModelId=#{id}
+</delete>
+</mapper>

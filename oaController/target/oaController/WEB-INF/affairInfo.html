@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>申请表单</title>
+<script type="text/javascript" src="../resources/js/jquery-1.7.2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../resources/css/WdatePicker.css" />
+<script type="text/javascript" src="../resources/js/WdatePicker.js"></script> 
+<script type="text/javascript" src="../resources/js/affairInfo.js"></script>
+	<style>
+	.rightinfo{width:810px;border:1px solid red;}
+	.table{margin-left:100px;padding:10px;text-align:left;}
+	.p{color:gray;margin-right:100px}
+	#btn{margin-left:385px;margin-top:10px}
+	</style>
+</head>
+   <body> 
+    <div class="rightinfo">
+    	<h2 align="center">${affairModelVo.affairModelName}</h2>
+    	<p class="p" align="right" >日期：${affairModelVo.createDateTime}</p>
+    	<table class="table" border="1" cellpadding="10" >
+    		<tr>
+    			<td>流程发起人</td>
+    			<td data="0">${userSession.user.nickName }</td>
+    		</tr>
+    		<#list affairModelVo.modelItemVoList as modelItemVo>
+				<tr>
+	    			<td>${modelItemVo.modelItemName}</td>
+	    				<!-- 文本框 -->
+	    				<#if modelItemVo.modelItemType=="1">
+	    				
+	    						<td data="1">
+	    						<input name="" type="text" style="border:1px solid #cccccc;" />
+	    						</td>
+	    				</#if>
+	    				<!-- 日期框 -->
+	    				<#if modelItemVo.modelItemType=="2">
+	    						<td data="2">
+	    						<input name="" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" style="border:1px solid #cccccc;" />
+	    						</td>
+	    				</#if>
+	    				<!-- 下拉列表-->
+						<#if modelItemVo.modelItemType=="3">
+	    						<td data="3">
+		    						<select name="" style="border:1px solid #cccccc;">
+		    							<#list modelItemVo.optionList as option>
+		    								<option value="${option}">${option}</option>
+		    							</#list>
+		    						</select>
+	    						</td>
+	    				</#if>
+	    				<!-- 单选框-->
+	    				<#if modelItemVo.modelItemType=="4">
+	    						<td data="4">
+		    							<#list modelItemVo.optionList as option>
+		    								<input  name="radio" type="radio" value="${option}"/>${option}
+		    							</#list>
+	    						</td>
+	    				</#if>
+	    				<!-- 多选框-->
+	    				<#if modelItemVo.modelItemType=="5">
+	    						<td data="5">
+		    							<#list modelItemVo.optionList as option>
+		    								<input  name="checkbox" type="checkbox" value="${option}"/>${option}
+		    							</#list>
+	    						</td>
+	    				</#if>
+	    				<!-- 上传文件-->
+	    				<#if modelItemVo.modelItemType=="6">
+	    						<td data="6">
+		    							 <input name="uploadFile"  type="file" />
+	    						</td>
+	    				</#if>
+	    				<!-- 多行文本-->
+	    				<#if modelItemVo.modelItemType=="7">
+	    						<td data="7">
+		    							<textarea id="textarea" cols="50" rows="10" placeholder="事由" ></textarea><br>
+	    						</td>
+	    				</#if>
+	    		</tr>
+	    	</#list>			
+    	</table>
+    	
+    	 <input id="btn" type="button" value="提交" class="btn" /> 
+    	
+    	<form id="form1" action="#"  method="post">
+    		<input name="content" type="hidden" style="border:1px solid #cccccc;" />
+    		<div id="dv1"></div>
+    	</form>
+    	
+    </div>
+    
+    <div style="height:500px;"></div>
+</body>
+</html>

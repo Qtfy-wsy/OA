@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <settings>
+  <setting name="logImpl" value="STDOUT_LOGGING"/>
+  </settings>
+   <!-- 配置db.properties的路径
+   <properties resource="db.properties" />
+    -->
+   <!-- 配置别名 -->
+   <typeAliases>
+		<!--  <typeAlias type="com.test.pojo.Userinfo" alias="Userinfo"/>
+		-->
+		<package name="com.oa.pojo"/>
+		<package name="com.oa.pojo.vo"/>
+	</typeAliases>
+   
+   
+   <!-- 配置jdbc  jdbc事务自动提交：（暂时）
+   <environments default="development">
+		<environment id="development">
+		
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	 -->
+	 
+	<!-- 注册mapper文件 -->
+    <mappers>
+		<package name="com.oa.mapper"/>
+	</mappers>	
+
+</configuration>

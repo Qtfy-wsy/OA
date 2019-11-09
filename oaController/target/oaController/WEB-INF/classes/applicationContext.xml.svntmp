@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+	http://www.springframework.org/schema/tx  
+	http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	
+	<!-- 配置扫描的包  扫描包中的注解 -->
+	 <context:component-scan base-package="com.oa">
+	  <!-- 在很多配置中一般都会把springcommon(applicationContect)和springmvc进行分开配置，
+	   这种配置就像各司其职一样，显得特别清晰.
+	   在这里把controller过滤掉，只对一些事务逻辑的注解扫描
+	   而在springmvc.xml文件中只对@controller进行扫描 -->
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>	
+	
+		<!-- 导入 db.properties -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	    <property name="location" value="classpath:db.properties" />
+	</bean>
+	
+	<!--  配置c3p0 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${driver}"/>
+        <property name="jdbcUrl" value="${url}"/>	  
+	    <property name="user" value="${username}"/>
+        <property name="password" value="${password}"/>  
+        <!--       
+        <property name="checkoutTimeout" value="1000"/>
+        <property name="idleConnectionTestPeriod" value="30"/>
+        <property name="initialPoolSize" value="10"/>
+        <property name="maxIdleTime" value="30"/>
+        <property name="maxPoolSize" value="10"/>
+        <property name="minPoolSize" value="2"/>
+        <property name="maxStatements" value="0"/> -->  
+    </bean>    
+    <!-- 配置 sqlsessionfactory  需要导入mybatis-spring架包-->
+    <bean id="sqlSessionFactory"  class="org.mybatis.spring.SqlSessionFactoryBean">
+         <property name="dataSource" ref="dataSource"></property>
+         <property name="configLocation" value="classpath:mybatis.xml"></property>
+    </bean>
+    
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+         <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+    <!-- 开启事务控制的注解支持
+        用注解取代 事务提交和回滚代码
+     -->
+    <tx:annotation-driven transaction-manager="txManager"/>
+    
+    <!-- 开启aop注解功能 -->
+     <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+     <!--
+       @Transactional注解只被应用在public方式上，这是由spring AOP的本质决定的。
+    -->
+</beans>

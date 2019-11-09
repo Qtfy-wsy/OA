@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.oa.mapper.DutyMapper">
+ 	<!-- 查找所有班次信息 -->
+ 	<select id="selectDuty" resultType="Duty">
+ 		select * from attendconfig
+ 	</select>
+ 	<!-- 按ID查找班次信息 -->
+ 	<select id="selectDutyById" parameterType="Param" resultType="Duty">
+ 		select * from attendconfig where dutyType=#{id}
+ 	</select>
+ 	<!-- 添加班次 -->
+ 	<insert id="insertDuty" useGeneratedKeys="true" parameterType="Duty">
+		insert into attendconfig (dutyType,dutyName,general,dutyTime1,dutyTime2,dutyTime3,dutyTime4,dutyTime5,dutyTime6,dutyType1,dutyType2,dutyType3,dutyType4,dutyType5,dutyType6) 
+		values (null,#{dutyName},#{general},#{dutyTime1},#{dutyTime2},#{dutyTime3},#{dutyTime4},#{dutyTime5},#{dutyTime6},#{dutyType1},#{dutyType2},#{dutyType3},#{dutyType4},#{dutyType5},#{dutyType6})
+	</insert>
+	<!-- 删除班次 -->
+	<delete id="deleteDuty" parameterType="Integer">
+		delete  from attendconfig where dutyType=#{id} 
+	</delete>
+	<!-- 更新班次 -->
+	<update id="updateDuty" parameterType="Duty" useGeneratedKeys="true">
+		update attendconfig set dutyName=#{dutyName},general=#{general},dutyTime1=#{dutyTime1},dutyTime2=#{dutyTime2},dutyTime3=#{dutyTime3},dutyTime4=#{dutyTime4},dutyTime5=#{dutyTime5},dutyTime6=#{dutyTime6} 
+		where dutyType=#{dutyType}
+	</update>
+	<!-- 查询用户班次信息 -->
+	<select id="selectUserDuty" parameterType="Param" resultMap="userDutyMap">
+		select userId,a.* from attendconfig as a inner join user_attend as b on a.dutyType=b.dutyType  where userId=#{id}
+	</select>
+	<!-- 按ID查询用户指定时间段的考勤记录 -->
+	<select id="selectUserAttend" parameterType="DateParam" resultType="Attendance">
+		select * from attendduty where userId=#{userId} and stime>=#{date1} and stime&lt;#{date2}
+	</select> 
+	<!-- 查询用户所有考勤记录 -->
+	<select id="selectUserAttends" parameterType="Param" resultType="Attendance">
+		select * from attendduty where userId=#{id}
+	</select>
+	<!-- 添加考勤记录 -->
+	<insert id="insertAttend" parameterType="Attendance" >
+		insert into attendduty (userId,registerType,stime,registerId,remark,dutyType,isHoliday,enable) 
+		values (#{userId},#{registerType},#{stime},#{registerId},#{remark},#{dutyType},#{isHoliday},#{enable})
+	</insert>
+	<!-- 用户打卡 -->
+	<update id="updateAttend" parameterType="UserUpdateAttend">
+		update attendduty set remark=#{remark},registerTime=#{registerTime},enable=0 where enable=1 and userId=#{userId} and registerId=#{registerId} and
+		stime>=#{date1} and stime&lt;#{date2}
+	</update>
+	<!-- 查询所有排班 -->
+	<select id="selectUserDutyInfo"  resultType="UserDutyInfo">
+		select * from user_duty
+	</select>
+	<!-- 按排班id查找排班 -->
+	<select id="selectUserDutyById" resultType="UserDutyInfo" parameterType="Integer">
+		select * from user_duty where dutyType=#{dutyType}
+	</select>
+	<!-- 给用户排班 -->
+	<insert id="insertUserDuty" parameterType="UserDutyInfo">
+		insert into user_attend (userId,dutyType) values (#{userId},#{dutyType})
+	</insert>
+	<!-- 删除用户排班 -->
+	<delete id="deleteUserDuty" parameterType="Integer">
+		delete from user_attend where userId=#{userId}
+	</delete>
+	<!-- 更新用户班次 -->
+	<update id="updateUserDuty" parameterType="UserDutyInfo">
+		update user_attend set dutyType=#{dutyType} where userId=#{userId}
+	</update>
+	<!-- 班次名称查重 -->
+	<select id="selectDutyName" parameterType="DutyName" resultType="DutyName">
+		select dutyName from attendconfig where dutyName=#{dutyName}
+		<if test="dutyType!=null">
+			and dutyType!=#{dutyType}
+		</if>
+	</select>
+	<!-- 用户班次视图 -->
+	<resultMap type="UserDuty" id="userDutyMap">
+		<result property="userId" column="userId"/>
+		<association property="userDuty" javaType="Duty">
+			<id property="dutyType" column="dutyType"/>
+			<result property="dutyName" column="dutyName"/>
+			<result property="general" column="general"/>
+			<result property="dutyTime1" column="dutyTime1"/>
+			<result property="dutyTime2" column="dutyTime2"/>
+			<result property="dutyTime3" column="dutyTime3"/>
+			<result property="dutyTime4" column="dutyTime4"/>
+			<result property="dutyTime5" column="dutyTime5"/>
+			<result property="dutyTime6" column="dutyTime6"/>
+			<result property="dutyType1" column="dutyType1"/>
+			<result property="dutyType2" column="dutyType2"/>
+			<result property="dutyType3" column="dutyType3"/>
+			<result property="dutyType4" column="dutyType4"/>
+			<result property="dutyType5" column="dutyType5"/>
+			<result property="dutyType6" column="dutyType6"/>
+		</association>
+	</resultMap>
+
+ </mapper>

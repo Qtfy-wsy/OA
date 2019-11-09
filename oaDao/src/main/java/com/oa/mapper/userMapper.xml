@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.oa.mapper.UserMapper">	
+  <!-- 查询用户 -->
+	<select id="selectUser" parameterType="UserLogin" resultMap="userMap">
+		select b.*,c.* from  role_permission_vo as a inner join user_role_vo as b on a.roleId=b.roleId 
+		inner join permission_menu_vo as c on a.permissionId=c.permissionId where a.ppid=-1 and uname=#{uname} and upwd=#{upwd}
+	</select>
+	<!-- 查询所有用户 -->
+	<select id="selectUsers" resultType="User">
+		select * from user
+	</select>
+	<!-- 查询所有用户的id -->
+	<select id="selectUserId" resultType="UserId">
+		select userId from user
+	</select>
+	<!-- 查询子菜单 -->
+	<select id="selectSubMenu" parameterType="Integer" resultMap="menuMap">
+		select * from menu where mpid=#{menuId}
+	</select>
+	<!-- 查询子菜单的子菜单 -->
+	<select id="selectSubMenu2" parameterType="Integer" resultType="Menu">
+		select * from menu where mpid=#{menuId}
+	</select>
+	<!-- 根据角色ID查询权限id -->
+	<select id="selectPermission" parameterType="Integer" resultType="role_permission">
+		select * from role_permission where roleId=#{roleId}
+	</select>
+	<!-- 查询用户是否有角色 -->
+	<select id="selectUserRole" parameterType="Param" resultType="User_role">
+		select * from user_role where userId=#{id}
+	</select>
+	<!-- 添加用户 -->
+	<insert id="insertUser" parameterType="User" useGeneratedKeys="true">
+		insert into user values (null,#{uname},#{upwd},#{nickName},#{leaderId},#{face})
+	</insert>
+	<!-- 删除用户 -->
+	<delete id="deleteUser" parameterType="Param">
+		delete from user where userId=#{id}
+	</delete>
+	<!-- 更改用户 -->
+	<update id="updateUser" parameterType="User">
+		update from user set uname=#{uname},upwd=#{upwd},nickName=#{nickName},leaderId=#{leaderId},face=#{face} where userId=#{userId}
+	</update>
+	<!-- 查询部门用户-->
+	<select id="selectDepartmentUser" parameterType="Integer" resultType="UserVo">
+		select userId,uname from user where userId=#{userId} or leaderId=#{userId}
+	</select>
+	<!-- 用户密码验证 -->
+	<select id="selectPswd" parameterType="UserId_pswd" resultType="UserId_pswd">
+		select userId,uname,upwd from user where userId=#{userId} and upwd=#{upwd}
+	</select>
+	
+	 <select id="selectUser1"  parameterType="User"     resultType="User">
+ 	select * from user where uname=#{uname} and upwd=#{upwd}
+ 	</select>
+ 
+ 	<select id="selectUserByuserId"  parameterType="int"    resultType="User">
+	 select * from user where userId=#{userId}
+ 	</select>
+ 
+ 	<select id="selectUsers1"  parameterType="int"    resultType="User">
+ 	select * from user where leaderId=#{leaderId}
+ 	</select>
+	
+	<!-- 用户 -->
+	<resultMap type="User" id="userMap">
+		<id property="userId" column="userId"/>
+		<result property="uname" column="uname"/>
+		<result property="upwd" column="upwd"/>
+		<result property="nickName" column="nickName"/>
+		<result property="leaderId" column="leaderId"/>
+		<result property="face" column="face"/>
+		<collection property="roleList" ofType="Role">
+			<id property="roleId" column="roleId"/>
+			<result property="roleName" column="roleName"/>
+			<result property="departmentId" column="departmentId"/>
+			<collection property="role_pid" ofType="role_permission" select="selectPermission" column="roleId">
+				<result property="roleId" column="roleId"/>
+				<result property="permissionId" column="permissionId"/>
+			</collection>
+			<collection property="permissionList" ofType="Permission">
+				<id property="permissionId" column="permissionId"/>
+				<result property="permissionName" column="permissionName"/>
+				<result property="permissionType" column="permissionType"/>
+				<result property="ppid" column="ppid"/>
+				<association property="menu" javaType="Menu">
+					<id property="menuId" column="menuId"/>
+					<result property="menuName" column="menuName"/>
+					<result property="menuUrl" column="menuUrl"/>
+					<result property="mpid" column="mpid"/>
+					<collection property="subMenu" ofType="Menu" select="selectSubMenu" column="menuId">
+					</collection>
+				</association>
+			</collection>
+		</collection>
+	</resultMap>
+	<resultMap type="Menu" id="menuMap">
+		<id property="menuId" column="menuId"/>
+		<result property="menuName" column="menuName"/>
+		<result property="menuUrl" column="menuUrl"/>
+		<result property="mpid" column="mpid"/>
+		<collection property="subMenu" ofType="Menu" select="selectSubMenu2" column="menuId"></collection>
+	</resultMap>
+	
+  </mapper>

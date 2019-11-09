@@ -1,0 +1,31 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+	<span>${user.uname}</span>&nbsp;&nbsp;&nbsp;<span>${user.nickName}</span>
+	</div>
+	<c:forEach var="role" items="${user.roleList}">
+		<div>
+			<li style="color:blue">${role.roleName}</li>
+		</div>
+		<div>
+			
+			
+		</div>
+	</c:forEach>
+	<c:forEach var="p" items="${permissions}">
+						<li>${p.permissionId}</li>
+					<li>${p.menu.menuName}</li>
+					<c:forEach var="menu" items="${p.menu.subMenu}">
+						<li style="color:red">${menu.menuName}</li>
+					</c:forEach>
+	</c:forEach>
+</body>
+</html>

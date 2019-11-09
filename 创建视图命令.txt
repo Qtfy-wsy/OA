@@ -1,0 +1,36 @@
+-- 建立用户与角色视图
+
+
+-- create view user_role_vo as 
+
+-- select b.*,c.* from user_role as a inner join user as b on a.userId=b.userId
+
+-- inner join role as c on a.roleId=c.roleId
+-- 建立角色与权限视图											 
+
+-- create view role_permission_vo as 
+
+-- select c.*,b.* from role_permission as a inner join permission as b on a.permissionId=b.permissionId 
+
+-- inner join role as c on a.roleId=c.roleId 
+-- 建立权限与菜单视图
+-- create view permission_menu_vo as 
+-- select b.*,c.* 
+-- from permission_menu as a inner join permission as b on a.permissionId=b.permissionId 
+-- inner join menu as c on a.menuId=c.menuId 
+-- 建立权限与操作视图
+-- create view permission_operate_vo as 
+-- select b.*,c.* from permission_operate as a inner join permission as b on a.permissionId=b.permissionId 
+-- inner join operate as c on a.operateId=c.operateId 
+-- 查用户权限
+-- select b.*,c.* 
+-- from  role_permission_vo as a inner join user_role_vo as b on a.roleId=b.roleId 
+-- inner join permission_menu_vo as c on a.permissionId=c.permissionId 
+
+-- 菜单操作权限视图
+-- create view menu_operate as 
+-- select menuId,c.operateId,c.operateName,c.operateAction,d.permissionId 
+-- from permission_menu as a inner join permission_operate as b on a.permissionId=b.permissionId 
+-- inner join operate as c inner join permission_operate as d 
+-- where c.opid =b.operateId and  c.operateId=d.operateId 
+ 

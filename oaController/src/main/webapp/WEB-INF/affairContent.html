@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>待办公文创建</title>
+<script type="text/javascript" src="../resources/js/jquery-1.7.2.min.js"></script>
+<style>
+.div1{width:300px;height:500px;border:1px red}
+#table{width:600px;height:350px;text-align:center}
+</style>
+</head>
+<body>
+	<h4>流程信息</h4>
+     <table border="1" class="tab" style="width:850px;" cellspacing="0" cellpadding="3">
+              <tr>
+                <td align="center" width="150">流程编号</td>
+                <td align="center" width="150">流程标题</td>
+                <td align="center" width="150">流程发起人</td>
+                <td align="center" width="180">流程发起时间</td>
+                <td align="center" width="150">流程链</td>
+                <td align="center" width="150">流程状态</td>
+              </tr>
+              <tr>
+                <td align="center">${affairPendVo.affairChainId}</td>
+                <td align="center">${affairPendVo.affairModelName}</td>
+                <td align="center">${affairPendVo.userId}</td>
+                <td align="center">${affairPendVo.createDateTime}</td>
+                <td align="center">${affairPendVo.affairChain}</td>
+                <td align="center">${affairPendVo.affairState}</td>
+              </tr>
+            </table>
+       <h4>正文信息</h4>    
+            <div class="div1">${affairPendVo.content}</div>
+            
+<script type="text/javascript">
+	
+</script>
+</body>
+</html>
+

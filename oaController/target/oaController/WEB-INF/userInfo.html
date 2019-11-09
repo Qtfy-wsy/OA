@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div>
+<span>${user.uname}</span>&nbsp;&nbsp;&nbsp;<span>${user.nickName}</span>
+</div>
+<div>
+	<span >${role.roleName}</span>
+	<#list permissionList as permission>
+		<span>${permission.permissionName}</span>
+		<#list subPermission sp>
+			<span>${sp.permissionName}</span><br/>
+		</#list>
+		<br/>
+	</#list>
+	<br/>
+</div>
+</body>
+</html>

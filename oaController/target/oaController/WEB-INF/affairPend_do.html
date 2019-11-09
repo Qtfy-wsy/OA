@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../resources/css/style.css" />
+<link rel="stylesheet" type="text/css" href="../resources/css/skin_/form.css" />
+<link href="../resources/umeditor/themes/default/_css/umeditor.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="../resources/js/jquery.js"></script>
+<script type="text/javascript" src="../resources/js/jquery.select.js"></script>
+<title>审核流程</title>
+<style>
+.div_t{margin-left:50px;margin-top:5px;color:#000;font-size: 12px;border:1px solid  #ccc;
+width:135px;height:20px;line-height:20px;text-align:center}
+#table{width:600px;height:350px;text-align:center;border="1"}
+</style>
+</head>
+<body>
+<div id="container">
+	<div id="hd">
+    </div>
+    <div id="bd">
+    	<div id="main">
+            <h2 class="subfild">
+            	<span>基本信息</span>
+            </h2>
+            <div class="subfild-content base-info">
+            
+            <div class="kv-item ue-clear">
+                	<label>流程编号</label>
+                	<div class="kv-item-content"><div class="div_t">${affairPendVo.affairChainId}</div></div>
+                </div>
+            	
+            	<div class="kv-item ue-clear">
+                	<label>流程标题</label>
+                	<div class="kv-item-content"><div class="div_t">${affairPendVo.affairModelName}</div></div>
+                </div>
+                <div class="kv-item ue-clear">
+                	<label>流程发起人</label>
+                	<div class="kv-item-content"><div class="div_t">${affairPendVo.userId}</div></div>
+                </div>
+                <div class="kv-item ue-clear">
+                	<label>流程发起时间</label>
+                	<div class="kv-item-content"><div class="div_t">${affairPendVo.createDateTime}</div></div>
+                </div>
+                <div class="kv-item ue-clear">
+                	<label>流程链</label>
+                	<div class="kv-item-content"><div class="div_t">${affairPendVo.affairChain}</div></div>
+                </div>
+            </div>
+            
+            <h2 class="subfild">
+            	<span>正文信息</span>
+            </h2>
+             <div class="div1">${affairPendVo.content}</div>
+            
+            <div class="subfild-content remarkes-info">
+            	<div class="kv-item ue-clear">
+                	<label><span class="impInfo">*</span>审核批注</label>
+                	<div class="kv-item-content">
+                    	<textarea placeholder="批注" id="content" style="width:600px;height:140px;"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+             <div class="kv-item ue-clear">
+                	<label>审核意见</label>
+                	<div class="kv-item-content">
+                    	<span class="choose">
+                            <span class="checkboxouter">
+                                <input type="radio" name="need" value="tongyi"/>
+                                <span class="radio"></span>
+                            </span>
+                            <span class="text">同意</span>
+                        </span>
+                    	<span class="choose">
+                            <span class="checkboxouter">
+                                <input type="radio" name="need" value="bohui"/>
+                                <span class="radio"></span>
+                            </span>
+                            <span class="text">驳回</span>
+                        </span>                       
+                   </div>
+                </div>
+            
+            
+            <div class="buttons">
+                <input id="button_t" type="button" value="确认" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+ $(function(){
+	$("#button_t").click(function(){
+		var check;
+		var checkformation;
+		if($("input[type='radio']:checked")){
+			check=$("input[type='radio']:checked").val();
+		}
+		checkformation=$("#content").val();
+		 window.location.href = "affairCheck?check="+check+"&affairChainId="+${affairPendVo.affairChainId}+
+				 "&checkformation="+encodeURI(encodeURI(checkformation))+"&affairchain="+'${affairPendVo.affairChain}';
+	}); 
+ }); 	
+
+</script>
+</body>
+
+</html>

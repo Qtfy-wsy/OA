@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.oa.mapper.AffairMapper">
+
+<select  id="selectAffairModels"   resultType="AffairModel">
+		select * from affairmodel ;
+</select>
+
+<select  id="selectAffairModelItems"  parameterType="int" resultMap="ItemVo">
+		select * from affairmodelitem where affairModelId=#{affairModelId} ;
+</select>
+
+ <select  id="selectAffairModel"  parameterType="int" resultType="AffairModelVo">
+		select * from affairmodel where affairModelId=#{affairModelId} ;
+</select> 
+
+<resultMap type="ModelItemVo" id="ItemVo">
+<result  property="modelItemId" column="modelItemId"/>
+<result  property="modelItemName" column="modelItemName"/>
+<result  property="modelItemType" column="modelItemType"/>
+<result  property="modelItemOption" column="modelItemOption"/>
+<result  property="affairModelId" column="affairModelId"/>
+</resultMap>
+
+<!-- <resultMap type="AffairModelVo" id="ModelVo">
+<result  property="" column=""/>
+<result  property="" column=""/>
+<result  property="" column=""/>
+<result  property="" column=""/>
+</resultMap> -->
+<insert id="saveAffair" parameterType="Affair" useGeneratedKeys="true">
+insert into affair(affairId,userId,affairTime,affairContent,affairState,affairModelId) values(
+null,#{userId},#{affairTime},#{affairContent},#{affairState},#{affairModelId})
+</insert>
+
+<select id="selectPrimaryKey" resultType="int">
+select @@identity
+</select>
+
+<insert id="saveAffairChain" parameterType="AffairChain" useGeneratedKeys="true">
+insert into affairchain(affairChainId,userId,affairId,affairChainOrder,affairChainTime,affairChainRemark,affairChainState) values(
+null,#{userId},#{affairId},#{affairChainOrder},#{affairChainTime},#{affairChainRemark},#{affairChainState})
+</insert>
+
+<select id="selectAffairChains" parameterType="int" resultType="AffairChain">
+select * from affairchain where userId=#{userId} and affairChainState=0
+</select>
+
+<select id="selectAffair" parameterType="int" resultType="Affair">
+select * from affair where affairId=#{affairId}
+</select>
+
+<select id="selectAffairChain" parameterType="int" resultType="AffairChain">
+select * from affairchain where affairChainId=#{affairChainId}  
+</select>
+
+<update id="updateAffairChain" parameterType="AffairChain">
+update affairchain set affairChainTime=#{affairChainTime},affairChainRemark=#{affairChainRemark},
+affairChainState=#{affairChainState} where affairChainId=#{affairChainId}
+</update>
+
+<update id="updateAffair" parameterType="int" >
+update affair set affairState=#{1} where affairId=#{0}
+</update>
+
+<select id="selectAffairs" resultType="Affair">
+select * from affair where affairState!=0
+</select>
+
+<select id="selectAffairChains2" parameterType="int" resultType="AffairChain">
+select * from affairchain where userId=#{userId} and affairChainState!=0
+</select>
+
+<select id="selectAffair2" parameterType="int" resultType="Affair">
+select * from affair where affairId=#{affairId}  and affairState!=0
+</select>
+
+<select id="selectAffairChainsByAffairId" parameterType="int" resultType="AffairChain">
+select * from affairchain where affairId=#{affairId} 
+</select>
+
+<select id="selectAffairChains3" parameterType="int" resultType="AffairChain">
+select * from affairchain where userId=#{userId} 
+</select>
+</mapper>
